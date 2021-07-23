@@ -44,7 +44,7 @@ SELECT job_id, job_title, published_date, removed_date
 FROM jobs
 WHERE YEAR(published_date) = 2016;
 
--- Filtered data betweeb specific Dates for published date
+-- Filtered data between specific Dates for published date
 
 SELECT job_id, job_title, published_date, removed_date
 FROM jobs
