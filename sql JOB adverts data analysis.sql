@@ -1,17 +1,23 @@
 -- JOB ADVERTS DATA ANALYSIS
+
 USE job_adverts;
+
 SELECT job_id, job_title, salary_estimate_min, salary_estimate_max
 FROM jobs;
 
+ -- Did Some Data cleaning and Formatting
+
 SELECT job_id, job_title, REPLACE(salary_estimate_min, "K", "000") AS SALARY_MIN, REPLACE(salary_estimate_max, "K", "000") AS SALARY_MAX
 FROM jobs
-WHERE REPLACE(salary_estimate_max, "K", "000") < 105000;
+--WHERE REPLACE(salary_estimate_max, "K", "000") < 105000;
 
 SELECT company_name, company_rank, company_size_min, company_size_max
 FROM jobs
 WHERE company_size_min > 60 AND 
 	  company_size_max <120;
-      
+ 
+ -- Again Some Data Formatting
+ 
 SELECT job_id, UPPER(job_title), LOWER(company_name)
 FROM jobs;
 
@@ -33,14 +39,18 @@ SELECT company_name, company_rank, company_market_value, ROUND(company_market_va
 FROM jobs;
 
 
--- PART 2 ASSIGNMENT
+-- Filtered data for specific publishing year
 SELECT job_id, job_title, published_date, removed_date
 FROM jobs
 WHERE YEAR(published_date) = 2016;
 
+-- Filtered data betweeb specific Dates for published date
+
 SELECT job_id, job_title, published_date, removed_date
 FROM jobs
 WHERE published_date BETWEEN "2017-01-01" AND "2017-01-31";
+
+-- All the Job postings that were removed very next day.
 
 SELECT job_id, job_title, published_date, removed_date
 FROM jobs
@@ -63,6 +73,9 @@ headquarters_of_company IS NULL;
 SELECT job_id, job_title, published_date, IFNULL(removed_date, CURDATE()),IFNULL(headquarters_of_company, state_of_company), IFNULL(company_name, "N/A")
 FROM jobs;
 
+-- Some Case Statement for summarizig data according to company_market_value in different ranges.
+
+
 SELECT company_name, company_market_value,
 CASE
 	WHEN company_market_value BETWEEN 0 AND 300		THEN "Low Range"
@@ -72,6 +85,7 @@ CASE
 END AS "company_market_value_rank"
 FROM jobs;
 
+-- Some Case Statement for summarizig data according to company size in different ranges.
 
 SELECT job_title, company_name, company_size_min, company_size_max, 
 CASE
